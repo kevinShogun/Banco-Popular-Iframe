@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script src='https://unpkg.com/react@16.3.1/umd/react.production.min.js'></script>
+  <script src='https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js'></script>
+  <script src='https://unpkg.com/react-router-dom@5.0.0/umd/react-router-dom.min.js'></script>
+  <script src='https://unpkg.com/babel-standalone@6.26.0/babel.js'></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load our React component. -->
+  <script src="./main.js" type='text/babel' crossorigin></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+  <script type='text/babel' crossorigin>
+    const Card = () => {
+      return (
+        <div className="p-3 bg-gray-100 shadow-xl m-5 w-[300px] rounded-2xl">
+          <img
+            src="https://www.bbva.com/wp-content/uploads/2021/04/casas-ecolo%CC%81gicas_apertura-hogar-sostenibilidad-certificado-.jpg"
+            alt="casa"
+            className="w-[300px] rounded-2xl"
+          />
+          <p className="text-black font-bold">Escazú, San Jose $20,000</p>
+        </div>
+      );
+    };
+
+
+    const App = () => (
+      <div className="">
+        <div className="mapouter"><div className="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org">123movies</a><br /><a href="https://www.embedgooglemap.net">how to add a google map to a website</a></div></div>
+        <div className="flex justify-center items-center">
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </div>
+    );
+    ReactDOM.render(<App />, document.querySelector("#root"));
+
+  </script>
+
+</head>
+
+<body>
+
+  <header class="bg-[#F4F4F4] flex justify-center items-center">
+    <div class="flex-1">
+      <img src="https://www.publicidadencostarica.com/wp-content/uploads/2018/05/Logo-Banco-Popular.png"
+        alt="banco popular" class="h-[120px]" />
+    </div>
+    <div>
+      <select class="mx-5 w-[200px] px-5 py-2 rounded-lg">
+        <option>Casa</option>
+        <option>Terreno</option>
+        <option>Lote</option>
+      </select>
+    </div>
+  </header>
+
+  </div>
+  <div id='root'></div>
+</body>
+
+</html>
