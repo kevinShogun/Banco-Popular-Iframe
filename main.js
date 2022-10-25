@@ -1,29 +1,49 @@
-const Card = () => {
+const { useState, useEffect } = React;
+
+const CardContainer = () => {
+	// get data from api
+	const [data, setData] = useState([]);
+
+	useEffect(() => {
+		fetch(
+			"https://banco-popular-geolocalizacion-api.onrender.com/api/v1/propiedades"
+		)
+			.then((response) => response.json())
+			.then((data) => setData(data.data));
+	}, []);
+
+	// console.log(data);
 	return (
-		<div className="p-3 bg-gray-100 shadow-xl m-5 w-[300px] rounded-2xl">
-			<img
-				src="https://www.bbva.com/wp-content/uploads/2021/04/casas-ecolo%CC%81gicas_apertura-hogar-sostenibilidad-certificado-.jpg"
-				alt="casa"
-				className="w-[300px] rounded-2xl"
-			/>
-      <p className="text-black font-bold">Escazú, San Jose $20,000</p>
+		<div className="flex">
+			{data.map((item, index) => (
+				<Card key={index} {...item} />
+			))}
 		</div>
 	);
 };
 
+const Card = (item) => {
+	return (
+		<div className="p-3 bg-gray-100 shadow-xl m-5 min-w-[300px] rounded-2xl">
+			<img
+				src={item.fotos[0].url}
+				alt="casa"
+				className="w-[300px] rounded-2xl h-[200px] object-cover"
+			/>
+			<p className="text-black font-bold">
+				{item.canton}, {item.provincia} - ₡{item.precioVenta}
+			</p>
+		</div>
+	);
+};
 
-const App = () => (
-	<div className="flex justify-center items-center">
-		<Card />
-		<Card />
-		<Card />
-	</div>
-);
-ReactDOM.render(<App />, document.querySelector("#root"));
+const App = (props) => {
+	return (
+		<div>
+			<CardContainer />
+		</div>
+	);
+};
 
-
-map = new google.maps.Map(document.getElementById('map'), {
-  center: {lat: -34.397, lng: 150.644},
-  zoom: 8,
-  mapId: '4cb2ab46db061417'
-  });
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
