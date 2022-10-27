@@ -35,10 +35,7 @@ function sample() {
                         .querySelector(".location.active")
                         .classList.remove(activeClass);
                     }
-                    scroll({
-                      top: targetLocation.offsetTop,
-                      behavior: "smooth"
-                    });
+                    
                   });
               }
 
@@ -70,18 +67,13 @@ function sample() {
           infowindow.setContent(createInfoWindowContent(pins[i]));
           map.setCenter(marker.getPosition());
           infowindow.open(map, marker);
-          const targetLocation = document.querySelector(`[data-index="${i}"]`);
      
           if (document.querySelector(".location.active")) {
             document
               .querySelector(".location.active")
               .classList.remove(activeClass);
           }
-          targetLocation.classList.add(activeClass);
-          scroll({
-            top: targetLocation.offsetTop,
-            behavior: "smooth"
-          });
+         
         });
     }
 
