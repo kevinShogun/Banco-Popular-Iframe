@@ -64,10 +64,10 @@ const CardContainer = () => {
 		<div>
 			<div>
 				<select
-					class="mx-5 fixed top-24 md:top-10 right-10 bg-white px-3 w-[200px] px-5 py-2 rounded-lg outline-none"
+					class="mx-5 bg-white fixed top-24 md:top-10 right-10 bg-white px-3 w-[200px] px-5 py-2 rounded-full outline-none"
 					onChange={(e) => setSelectValue(e.target.value)}
 				>
-					<option value="" selected disabled hidden>
+					<option value="" selected disabled hidden className="mt-5">
 						Elige aquí
 					</option>
 					<option value="Apartamento">Apartamento</option>
@@ -79,9 +79,9 @@ const CardContainer = () => {
 				</select>
 			</div>
 
-			<div className="flex bg-[#F4F4F4] mt-5 flex-col md:flex-row items-center justify-center">
+			<div className="flex mt-5 flex-col md:flex-row items-center justify-center">
 				<button
-					className="bg-zinc-200 rounded-full w-[50px] h-[50px] shadow-xl text-gray-50 font-bold text-2xl pb-1"
+					className="bg-zinc-50 rounded-full w-[50px] h-[50px] shadow-xl text-[#A4B3B7] font-bold text-2xl pb-1"
 					onClick={changeSlidePrevious}
 				>
 					{"<"}
@@ -91,7 +91,7 @@ const CardContainer = () => {
 					<Card key={index} {...item} />
 				))}
 				<button
-					className="bg-zinc-200 rounded-full w-[50px] h-[50px] shadow-xl text-gray-50 font-bold text-2xl pb-1"
+					className="bg-zinc-50 rounded-full w-[50px] h-[50px] shadow-xl text-[#A4B3B7] font-bold text-3xl pb-1"
 					onClick={chageSlide}
 				>
 					{">"}
@@ -103,14 +103,14 @@ const CardContainer = () => {
 
 const Card = (item) => {
 	return (
-		<div className="m-5 w-[250px] overflow-hidden p-2 bg-gray-100 shadow-xl rounded-2xl">
+		<div className="m-5 w-[250px] overflow-hidden p-2 bg-gray-100 shadow-xl rounded-3xl">
 			<img
 				src={item.fotos[0].url}
 				alt="casa"
-				className="w-[250px] rounded-2xl h-[150px] object-cover"
+				className="w-[250px] rounded-2xl h-[100px] object-cover"
 			/>
-			<div className="text-black font-bold mx-5 my-1 flex justify-between text-sm">
-				<p>
+			<div className="text-black  font-bold mx-5 my-1 flex justify-between text-xs">
+				<p className="">
 					{item.canton}, {item.provincia}
 				</p>
 				<p>₡{item.precioVenta}</p>
@@ -121,14 +121,13 @@ const Card = (item) => {
 
 const App = () => {
 	return (
-		<div className="bg-[#F4F4F4]">
-			<div className="m-auto bg-[#F4F4F4] relative bottom-0 flex flex-col justify-center items-center mt-5">
+			<div
+				className="absolute w-full bottom-0 flex flex-col justify-center items-center mt-5"
+			>
 				<CardContainer />
 			</div>
-		</div>
 	);
 };
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
-
