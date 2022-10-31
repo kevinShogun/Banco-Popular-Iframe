@@ -46,63 +46,24 @@ function sample() {
 		});
 }
 
-// function createMarkers(map) {
-//   const infowindow = new google.maps.InfoWindow();
-
-//   const markerIcon = {
-//     url: "https://polpo-assets.s3.amazonaws.com/production/Congreso+de+Ortopedia/Portadas/Banco_popular_icons/Marcador.svg",
-//     scaledSize: new google.maps.Size(40, 40)
-//   };
-
-//   for (let i = 0; i < pins.length; i++) {
-//     const marker = new google.maps.Marker({
-//       position: {
-//         lat: pins[i].lat,
-//         lng: pins[i].long
-//       },
-//       map,
-//       icon: markerIcon,
-//       animation: google.maps.Animation.DROP
-//     });
-
-//     markers.push(marker);
-//     google.maps.event.addListener(marker, "click", function () {
-//         infowindow.setContent(createInfoWindowContent(pins[i]));
-//         map.setCenter(marker.getPosition());
-//         infowindow.open(map, marker);
-
-//         if (document.querySelector(".location.active")) {
-//           document
-//             .querySelector(".location.active")
-//             .classList.remove(activeClass);
-//         }
-
-//       });
-//   }
-
-// }
-
 function createInfoWindowContent(pin) {
 	let photoProperty = "";
 	let textProperty = "";
 	let infoProperty = "";
 	let infoContacto = "";
+	let labelDescuento = "";
 
 	photoProperty = `
-        <div class="flex flex-col items-center m-2">
-          <img class="h-[200px] w-[271px]" src=${pin.fotos[0].url} alt=${pin.provincia}>
+	
+        <div class="flex flex-col items-center w-[300px] bg-white p-2 z-50 relative ${pin.descuento > 0 ? " mt-8 " : "mt-5"} rounded-2xl">
+          <img class="w-full rounded-2xl h-[120px] object-cover " src=${pin.fotos[0].url} alt=${pin.provincia}>
         </div>
       `;
 
-	textProperty = `
-        <div class="flex justify-between my-1" style="font-size: 14px">
-        <p class="text-black font-bold">${pin.provincia}, ${pin.canton}</p>
-        <p class="text-black font-bold">₡ ${pin.avaluo}</p>
-        </div>
-      `;
+	
 
 	infoProperty = `
-        <div class="my-2">
+        <div class="m-2 ">
           <p class="text-[#E68A24] text-sm font-black">${pin.categoria.categoria}</p>
           <p class="text-[#E68A24] text-xs font-black">${pin.area} m<sup>2</sup></p>
           <p class="text-black text-xs">Expediente ${pin.expediente} </p>
@@ -110,7 +71,7 @@ function createInfoWindowContent(pin) {
       `;
 
 	infoContacto = `
-        <div class="my-1">
+        <div class="my-1 mx-2">
           <p class="text-[#E68A24] text-sm font-black"> + INFORMACIÓN</p>
           <div class="flex items-center justify-between my-2">
             <div class="flex">
@@ -134,7 +95,7 @@ function createInfoWindowContent(pin) {
                 </a>
 
                 <a
-                  href="https://api.whatsapp.com/send?phone=${pin.agente.celular}&text=Hola%20que%20tal,%20me%20gustaría%20más%20información%20de%20la%20propiedad%20en%20${pin.provincia},%20${pin.canton}"
+                  href="https://api.whatsapp.com/send?phone=+506-${pin.agente.celular}&text=Hola%20que%20tal,%20me%20gustaría%20más%20información%20de%20la%20propiedad%20en%20${pin.provincia},%20${pin.canton}"
                   target="_blank"
                   rel="noreferrer"
                   class="mx-1"
@@ -142,15 +103,48 @@ function createInfoWindowContent(pin) {
                   <img class="h-6 w-6" src="https://polpo-assets.s3.amazonaws.com/production/Congreso+de+Ortopedia/Portadas/Banco_popular_icons/IconWhatsaap.svg" alt="email">
                 </a>
             </div>
-            <button class="border-2 border-[#6A1886] text-[#6A1886] p-3 rounded-full">
-            Ver catalogo
+            <button class="border-2 border-[#6A1886] text-[#6A1886] p-3 rounded-full"
+			  onclick="window.open('https://www.bancopopular.fi.cr/venta-de-propiedades/')"
+			>
+            Ver catálogo
             </button>
           </div>
-          <p class="font-bold" style="font-size: 14px">Lic. ${pin.agente.nombre} ${pin.agente.apellido}</p>
+          <p class="font-bold mb-5" style="font-size: 14px">Lic. ${pin.agente.nombre} ${pin.agente.apellido}</p>
+		  <br/>
         </div>
       `;
 
+	  if(pin.descuento > 0){
+		const {descuento} = pin;
+		const str = descuento.toString();
+		const res = str.replace(".", "");
+
+		labelDescuento = `
+		<div class="absolute top-0 right-0 text-center w-full bg-[#6A1886]  text-white font-bold text-lg pb-4 pt-1 mb-2">
+			${res.replace("0", "")}% Descuento
+		</div>
+		`;
+		textProperty = `
+        <div class="mx-2 flex justify-between my-1" style="font-size: 12px">
+        <p class="text-black font-bold">${pin.provincia}, ${pin.canton}</p>
+        <p class="text-black font-bold ">₡ ${pin.avaluo}</p>
+        </div>
+
+        <p class="text-black font-bold text-right mr-1">₡ ${pin.precioVenta}</p>
+      `;
+	  }else{
+		textProperty = `
+        <div class="mx-2 flex justify-between my-1" style="font-size: 12px">
+        <p class="text-black font-bold">${pin.provincia}, ${pin.canton}</p>
+        <p class="text-black font-bold">₡ ${pin.avaluo}</p>
+        </div>
+      `;
+	  }
+
+	  
+
 	const contentString = `
+	  ${labelDescuento}
       ${photoProperty}
       ${textProperty}
       ${infoProperty}
