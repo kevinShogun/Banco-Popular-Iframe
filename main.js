@@ -6,7 +6,7 @@ const CardContainer = () => {
 	const [propiedades, setpropiedades] = useState([]);
 	const [slider, setSlider] = useState({
 		min: 0,
-		max: 4,
+		max: 0,
 	});
 	const [selectValue, setSelectValue] = useState("");
 	useEffect(() => {
@@ -27,7 +27,30 @@ const CardContainer = () => {
 
 	useEffect(() => {
 		if (data.length > 0) {
-			setpropiedades(data.slice(0, 4));
+			if(window.innerWidth > 1024){
+				console.log("desktop");
+				setpropiedades(data.slice(0, 4));
+				setSlider({
+					min: 0,
+					max: 4,
+				})
+			}
+			if(window.innerWidth >= 682 && window.innerWidth < 1050){
+				console.log("tablet");
+				setpropiedades(data.slice(0, 3));
+				setSlider({
+					min: 0,
+					max: 3,
+				})
+			}
+			if(window.innerWidth < 700){
+				console.log("mobile");
+				setpropiedades(data.slice(0, 2));
+				setSlider({
+					min: 0,
+					max: 2,
+				})
+			}
 		}
 	}, [data]);
 
@@ -44,7 +67,7 @@ const CardContainer = () => {
 	};
 
 	const changeSlidePrevious = () => {
-		if (slider.min <= 0) {
+		if (slider.min === 0) {
 			return;
 		}
 		setSlider({
@@ -79,9 +102,9 @@ const CardContainer = () => {
 				</select>
 			</div>
 
-			<div className="flex mt-5 flex-col md:flex-row items-center justify-center">
+			<div className="flex mt-5 items-center justify-center">
 				<button
-					className="bg-zinc-50 rounded-full w-[50px] h-[50px] shadow-xl text-[#A4B3B7] font-bold text-2xl pb-1"
+					className="bg-zinc-50 rounded-full w-[50px] h-[50px] shadow-xl text-[#A4B3B7] font-bold text-3xl "
 					onClick={changeSlidePrevious}
 				>
 					{"<"}
@@ -91,7 +114,7 @@ const CardContainer = () => {
 					<Card key={index} {...item} />
 				))}
 				<button
-					className="bg-zinc-50 rounded-full w-[50px] h-[50px] shadow-xl text-[#A4B3B7] font-bold text-3xl pb-1"
+					className="bg-zinc-50 rounded-full w-[50px] h-[50px] shadow-xl text-[#A4B3B7] font-bold text-3xl"
 					onClick={chageSlide}
 				>
 					{">"}
