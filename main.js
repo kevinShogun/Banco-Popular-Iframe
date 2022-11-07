@@ -12,13 +12,13 @@ const CardContainer = () => {
 	useEffect(() => {
 		if (selectValue === "") {
 			fetch(
-				"https://banco-popular-geolocalizacion-api.onrender.com/api/v1/propiedades"
+				"https://banco-popular-geolocalizacion.onrender.com/api/v1/propiedades"
 			)
 				.then((response) => response.json())
 				.then((data) => setData(data.data));
 		} else {
 			fetch(
-				`https://banco-popular-geolocalizacion-api.onrender.com/api/v1/propiedades?categoria=${selectValue}`
+				`https://banco-popular-geolocalizacion.onrender.com/api/v1/propiedades?categoria=${selectValue}`
 			)
 				.then((response) => response.json())
 				.then((data) => setData(data.data));
