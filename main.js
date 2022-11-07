@@ -132,7 +132,9 @@ const Card = (item) => {
 				alt="casa"
 				className="w-[250px] rounded-2xl h-[100px] object-cover"
 			/>
-			<div className="text-black  font-bold mx-5 my-1 flex justify-between text-xs">
+			<div className="text-black  font-bold mx-5 my-1 flex justify-between"
+			style={{fontSize: ".6rem"}}
+			>
 				<p className="">
 					{item.canton}, {item.provincia}
 				</p>
